@@ -4,7 +4,7 @@ const CartWidget = () => {
   return (
     <a className='nav-link' href="#">
         
-    <img src={cart}/><span>8</span></a>
+    <img src={cart}/><span>7</span></a>
   )
 }
 
