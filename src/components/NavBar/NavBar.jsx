@@ -27,30 +27,33 @@ function NavBar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/category/electronica">
+              <Link className="nav-link text-white" to="/category/electronics">
                 Electrónica
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/category/hogar">
-                Hogar
+              <Link className="nav-link text-white" to="/category/jewelery">
+                Joyería
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link text-white" to="/category/men's clothing">
+                Ropa de Hombre
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-white" to="/category/women's clothing">
+                Ropa de Mujer
+              </Link>
+            </li>
+          </ul>
+
+          {}
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <CartWidget />
             </li>
           </ul>
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Qué querés buscar?"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-light" type="submit">
-              Buscar
-            </button>
-          </form>
         </div>
       </div>
     </nav>

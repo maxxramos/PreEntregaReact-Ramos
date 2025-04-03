@@ -1,24 +1,41 @@
-// ItemDetailContainer.js
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 function ItemDetailContainer() {
   const { itemId } = useParams();
   const [producto, setProducto] = useState(null);
-  const navigate = useNavigate();  // Usamos useNavigate para poder redirigir
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const url = `https://api.mercadolibre.com/items/${itemId}`;
+    const fetchProducto = async () => {
+      const url = `https://fakestoreapi.com/products/${itemId}`;
 
-    fetch(url)
-      .then((resp) => resp.json())
-      .then((data) => setProducto(data))
-      .catch((error) => console.error("Error al obtener los detalles del producto:", error));
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Error al obtener los detalles del producto");
+        }
+
+        const data = await response.json();
+        setProducto(data);
+      } catch (error) {
+        console.error("Error al obtener los detalles del producto:", error);
+        setError("Hubo un problema al cargar los detalles del producto.");
+      }
+    };
+
+    fetchProducto();
   }, [itemId]);
 
   const handleVolverClick = () => {
-    navigate(-1); // Vuelve a la página anterior (puede ser la lista de productos)
+    navigate(-1);
   };
+
+  if (error) {
+    return <p className="alert alert-danger">{error}</p>;
+  }
 
   if (!producto) {
     return <p>Cargando detalles del producto...</p>;
@@ -27,7 +44,7 @@ function ItemDetailContainer() {
   return (
     <div className="card mt-4">
       <img
-        src={producto.thumbnail}
+        src={producto.image}
         alt={producto.title}
         className="card-img-top img-fluid"
         style={{ maxHeight: "300px", objectFit: "contain" }}
@@ -35,15 +52,7 @@ function ItemDetailContainer() {
       <div className="card-body">
         <h5 className="card-title">{producto.title}</h5>
         <p className="card-text">Precio: ${producto.price}</p>
-        <p className="card-text">Condición: {producto.condition === "new" ? "Nuevo" : "Usado"}</p>
-        <a
-          href={producto.permalink}
-          className="btn btn-danger me-2"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Ver en MercadoLibre
-        </a>
+        <p className="card-text">{producto.description}</p>
         <button className="btn btn-secondary" onClick={handleVolverClick}>
           Volver
         </button>
@@ -53,3 +62,5 @@ function ItemDetailContainer() {
 }
 
 export default ItemDetailContainer;
+
+
